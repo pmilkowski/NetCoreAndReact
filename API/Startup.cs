@@ -18,7 +18,10 @@ namespace API
     public class Startup
     {
         private const string DefaultConnectionStringKey = "DefaultConnection";
-        public Startup (IConfiguration configuration)
+        private const string ClientAppAddress = @"http://localhost:3000";
+        private const string CorsPolicyKey = "CorsPolicy";
+
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -26,32 +29,38 @@ namespace API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices (IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext> (options =>
+            services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlite (Configuration.GetConnectionString (DefaultConnectionStringKey));
+                options.UseSqlite(Configuration.GetConnectionString(DefaultConnectionStringKey));
             });
-            services.AddControllers ();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicyKey, policy =>
+                {
+                    policy.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins(ClientAppAddress);
+                });
+            });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure (IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment ())
+            if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage ();
+                app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection ();
-
-            app.UseRouting ();
-
-            app.UseAuthorization ();
-
-            app.UseEndpoints (endpoints =>
+            app.UseCors(CorsPolicyKey);
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers ();
+                endpoints.MapControllers();
             });
         }
     }
