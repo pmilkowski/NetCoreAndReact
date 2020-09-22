@@ -34,6 +34,9 @@ bld/
 # EntityFramework files
 *.db
 
+# VSCode options directory
+.vscode
+
 # appsettings files
 *appsettings.*
 
