@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/activity';
@@ -28,8 +28,10 @@ export const ActivityForm: React.FC<IProps> = ({
 
   const [activity, setActivity] = useState(initializeForm);
 
-  const handleInputChange = (event: any) => {
-    const { name, value } = event.target;
+  const handleInputChange = (
+    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.currentTarget;
     setActivity({ ...activity, [name]: value });
   };
 
