@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
-import { List } from 'semantic-ui-react';
+import { Container, List } from 'semantic-ui-react';
 import { IActivity } from '../models/activity';
 import { NavBar } from '../../features/nav/NavBar';
+import { ActivityDashboard } from '../../features/activities/dashboard/ActivityDashboard';
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  );
+  const [editMode, setEditMode] = useState(false);
+  const handleSelectedActivity = (id: string) => {
+    setSelectedActivity(activities.filter((activity) => activity.id === id)[0]);
+  };
+
   useEffect(() => {
     axios
       .get<IActivity[]>('http://localhost:5000/api/activities')
@@ -15,14 +24,18 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       <NavBar />
-      <List>
-        {activities.map((activity) => (
-          <List.Item key={activity.id}>{activity.description}</List.Item>
-        ))}
-      </List>
-    </div>
+      <Container style={{ marginTop: '7em' }}>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectedActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        />
+      </Container>
+    </Fragment>
   );
 };
 

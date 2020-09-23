@@ -1,12 +1,23 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Button, Container, Menu } from 'semantic-ui-react';
 
 export const NavBar = () => {
   return (
-    <Menu inverted>
-      <Menu.Item name='home' />
-      <Menu.Item name='messages' />
-      <Menu.Item name='friends' />
+    <Menu fixed='top' inverted>
+      <Container>
+        <Menu.Item header>
+          <img
+            src='/assets/logo.png'
+            alt='logo'
+            style={{ marginRight: '10px' }}
+          />
+          Reactivities
+        </Menu.Item>
+        <Menu.Item name='Activities' />
+        <Menu.Item>
+          <Button positive content='Create activity' />
+        </Menu.Item>
+      </Container>
     </Menu>
   );
 };
