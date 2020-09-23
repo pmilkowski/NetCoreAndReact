@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 
-const NavBar = () => {
+export const NavBar = () => {
   return (
     <Menu inverted>
       <Menu.Item name='home' />
@@ -10,5 +10,3 @@ const NavBar = () => {
     </Menu>
   );
 };
-
-export default NavBar;
