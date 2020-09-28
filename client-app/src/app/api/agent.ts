@@ -12,7 +12,7 @@ const requests = {
 };
 
 const Activities = {
-  list: () => requests.get('/activities'),
+  list: (): Promise<IActivity[]> => requests.get('/activities'),
   details: (id: string) => requests.get(`/activities/${id}`),
   delete: (id: string) => requests.del(`/activities/${id}`),
   create: (activity: IActivity) => requests.post('/activities', activity),
