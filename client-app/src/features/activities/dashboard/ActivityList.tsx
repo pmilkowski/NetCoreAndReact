@@ -7,6 +7,7 @@ interface IProps {
   selectActivity: (id: string) => void;
   setEditMode: (editMode: boolean) => void;
   deleteActivity: (id: string) => void;
+  submitting: boolean;
 }
 
 export const ActivityList: React.FC<IProps> = ({
@@ -14,6 +15,7 @@ export const ActivityList: React.FC<IProps> = ({
   selectActivity,
   setEditMode,
   deleteActivity,
+  submitting,
 }) => {
   return (
     <Segment clearing>
@@ -41,6 +43,7 @@ export const ActivityList: React.FC<IProps> = ({
                   color='blue'
                 />
                 <Button
+                  loading={submitting}
                   onClick={() => {
                     deleteActivity(activity.id);
                   }}
