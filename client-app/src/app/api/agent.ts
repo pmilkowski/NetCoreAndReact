@@ -2,6 +2,7 @@ import axios, { AxiosAdapter, AxiosResponse } from "axios";
 import { IActivity } from "../models/activity";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
+const timeout: number = 1000;
 
 const responseBody = (response: AxiosResponse) => response.data;
 
@@ -11,12 +12,12 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
   );
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(1000)).then(responseBody),
+  get: (url: string) => axios.get(url).then(sleep(timeout)).then(responseBody),
   post: (url: string, body: {}) =>
-    axios.post(url, body).then(sleep(1000)).then(responseBody),
+    axios.post(url, body).then(sleep(timeout)).then(responseBody),
   put: (url: string, body: {}) =>
-    axios.put(url, body).then(sleep(1000)).then(responseBody),
-  del: (url: string) => axios.delete(url).then(sleep(1000)).then(responseBody),
+    axios.put(url, body).then(sleep(timeout)).then(responseBody),
+  del: (url: string) => axios.delete(url).then(sleep(timeout)).then(responseBody),
 };
 
 const Activities = {
