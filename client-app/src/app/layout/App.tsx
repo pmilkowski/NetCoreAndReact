@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment, SyntheticEvent } from "react";
-import axios from "axios";
-import { Container, List } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { IActivity } from "../models/activity";
 import { NavBar } from "../../features/nav/NavBar";
 import { ActivityDashboard } from "../../features/activities/dashboard/ActivityDashboard";
@@ -39,7 +38,7 @@ const App = () => {
   const handleEditActivity = (activity: IActivity) => {
     setSubmitting(true);
     agent.Activities.update(activity).then(() => {
-      setActivities([...activities.filter((a) => a.id != activity.id), activity]);
+      setActivities([...activities.filter((a) => a.id !== activity.id), activity]);
       setSelectedActivity(activity);
       setEditMode(false);
     }).then(() => setSubmitting(false));
@@ -49,7 +48,7 @@ const App = () => {
     setSubmitting(true);
     setTarget(event.currentTarget.name);
     agent.Activities.delete(id).then(() => {
-      setActivities([...activities.filter((a) => a.id != id)]);
+      setActivities([...activities.filter((a) => a.id !== id)]);
     }).then(() => setSubmitting(false));
   };
 
