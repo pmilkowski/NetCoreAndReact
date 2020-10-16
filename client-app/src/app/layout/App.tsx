@@ -2,10 +2,11 @@ import React, { useState, useEffect, Fragment, SyntheticEvent, useContext } from
 import { Container } from "semantic-ui-react";
 import { IActivity } from "../models/activity";
 import { NavBar } from "../../features/nav/NavBar";
-import { ActivityDashboard } from "../../features/activities/dashboard/ActivityDashboard";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponent";
 import ActivityStore from "../stores/activityStore"
+import { observer } from "mobx-react-lite";
 
 const App = () => {
   const activityStore = useContext(ActivityStore);
@@ -14,7 +15,6 @@ const App = () => {
     null
   );
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [target, setTarget] = useState('');
 
@@ -82,4 +82,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App);

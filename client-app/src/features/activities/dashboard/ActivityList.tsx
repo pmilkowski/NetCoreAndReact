@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent } from 'react';
 import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import { IActivity } from '../../../app/models/activity';
@@ -11,7 +12,7 @@ interface IProps {
   target: string;
 }
 
-export const ActivityList: React.FC<IProps> = ({
+const ActivityList: React.FC<IProps> = ({
   activities,
   selectActivity,
   setEditMode,
@@ -63,3 +64,5 @@ export const ActivityList: React.FC<IProps> = ({
     </Segment>
   );
 };
+
+export default observer(ActivityList);
