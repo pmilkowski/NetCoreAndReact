@@ -8,7 +8,7 @@ import LoadingComponent from "./LoadingComponent";
 import ActivityStore from "../stores/activityStore"
 import { observer } from "mobx-react-lite";
 
-const App = () => {
+const App = observer(() => {
   const activityStore = useContext(ActivityStore);
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
@@ -67,9 +67,7 @@ const App = () => {
         <ActivityDashboard
           activities={activityStore.activities}
           selectActivity={handleSelectedActivity}
-          selectedActivity={selectedActivity}
           setSelectedActivity={setSelectedActivity}
-          editMode={editMode}
           setEditMode={setEditMode}
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
@@ -80,6 +78,6 @@ const App = () => {
       </Container>
     </Fragment>
   );
-};
+});
 
-export default observer(App);
+export default App;
