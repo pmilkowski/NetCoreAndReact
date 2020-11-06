@@ -4,20 +4,18 @@ import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import ActivityStore from '../../../app/stores/activityStore';
 
 interface IProps {
-  setEditMode: (editMode: boolean) => void;
   deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
 }
 
 const ActivityList: React.FC<IProps> = observer(({
-  setEditMode,
   deleteActivity,
   submitting,
   target,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { activitiesByDate, selectActivity } = activityStore;
+  const { activitiesByDate, selectActivity, cancelFormOpen } = activityStore;
 
   return (
     <Segment clearing>
@@ -38,7 +36,7 @@ const ActivityList: React.FC<IProps> = observer(({
                 <Button
                   onClick={() => {
                     selectActivity(activity.id);
-                    setEditMode(false);
+                    cancelFormOpen();
                   }}
                   floated='right'
                   content='View'

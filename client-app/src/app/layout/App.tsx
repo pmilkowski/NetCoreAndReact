@@ -11,7 +11,6 @@ import NavBar from "../../features/nav/NavBar";
 const App = observer(() => {
   const activityStore = useContext(ActivityStore);
   const [activities, setActivities] = useState<IActivity[]>([]);
-  const [editMode, setEditMode] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [target, setTarget] = useState('');
 
@@ -34,7 +33,6 @@ const App = observer(() => {
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
         <ActivityDashboard
-          setEditMode={setEditMode}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
           target={target}
