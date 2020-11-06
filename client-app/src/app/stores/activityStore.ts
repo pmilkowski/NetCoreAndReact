@@ -8,6 +8,7 @@ class ActivityStore {
   loadingInitial = false;
   selectedActivity: IActivity | undefined;
   editMode = false;
+  submitting = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -27,14 +28,22 @@ class ActivityStore {
     this.loadingInitial = false;
   };
 
-    agent.Activities.list()
-      .then((activities) => {
-        activities.forEach((activity) => {
-          activity.date = activity.date.split(".")[0];
-          this.activities.push(activity);
-        });
-      })
-      .finally(() => (this.loadingInitial = false));
+  @action openCreateForm = () => {
+    this.editMode = true;
+    this.selectedActivity = undefined;
+  };
+
+  @action createActivity = async (activity: IActivity) => {
+    this.submitting = true;
+    try {
+      await agent.Activities.create(activity);
+      this.activities.push(activity);
+      this.editMode = false;
+      this.submitting = false;
+    } catch (error) {
+      this.submitting = false;
+      console.log(error);
+    }
   };
 
   @action selectActivity = (id: string) => {
