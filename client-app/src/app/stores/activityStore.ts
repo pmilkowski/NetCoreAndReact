@@ -1,5 +1,5 @@
 import { action, computed, makeAutoObservable } from "mobx";
-import { createContext } from "react";
+import { createContext, SyntheticEvent } from "react";
 import agent from "../api/agent";
 import { IActivity } from "../models/activity";
 
@@ -10,6 +10,7 @@ class ActivityStore {
   selectedActivity: IActivity | undefined;
   editMode = false;
   submitting = false;
+  target = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -82,6 +83,22 @@ class ActivityStore {
   @action selectActivity = (id: string) => {
     this.selectedActivity = this.activityRegistry.get(id);
     this.editMode = false;
+  };
+
+  @action deleteActivity = async (
+    event: SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    this.submitting = true;
+    this.target = event.currentTarget.name;
+    try {
+      await agent.Activities.delete(id);
+      this.activityRegistry.delete(id);
+    } catch (error) {
+      console.log(error);
+    }
+    this.submitting = false;
+    this.target = "";
   };
 }
 
