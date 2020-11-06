@@ -40,6 +40,19 @@ class ActivityStore {
     this.selectedActivity = undefined;
   };
 
+  @action openEditForm = (id: string) => {
+    this.selectedActivity = this.activityRegistry.get(id);
+    this.editMode = true;
+  };
+
+  @action cancelSelectedActivity = () => {
+    this.selectedActivity = undefined;
+  };
+
+  @action cancelFormOpen = () => {
+    this.editMode = false;
+  };
+
   @action createActivity = async (activity: IActivity) => {
     this.submitting = true;
     try {
