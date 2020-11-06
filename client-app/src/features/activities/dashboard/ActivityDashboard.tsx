@@ -8,22 +8,16 @@ import ActivityList from './ActivityList';
 import ActivityStore from '../../../app/stores/activityStore';
 
 interface IProps {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
   setSelectedActivity: (activity: IActivity | null) => void;
   setEditMode: (editMode: boolean) => void;
-  editActivity: (activity: IActivity) => void;
   deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
 }
 
 const ActivityDashboard: React.FC<IProps> = observer(({
-  activities,
-  selectActivity,
   setSelectedActivity,
   setEditMode,
-  editActivity,
   deleteActivity,
   submitting,
   target,
@@ -52,8 +46,6 @@ const ActivityDashboard: React.FC<IProps> = observer(({
             key={(selectedActivity && selectedActivity.id) || 0}
             setEditMode={setEditMode}
             activity={selectedActivity!}
-            editActivity={editActivity}
-            submitting={submitting}
           />
         )}
       </Grid.Column>
