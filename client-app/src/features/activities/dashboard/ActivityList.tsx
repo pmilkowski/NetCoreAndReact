@@ -17,12 +17,12 @@ const ActivityList: React.FC<IProps> = observer(({
   target,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { activities, selectActivity } = activityStore;
+  const { activitiesByDate, selectActivity } = activityStore;
 
   return (
     <Segment clearing>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Image size='tiny' src='/images/wireframe/image.png' />
             <Item.Content>

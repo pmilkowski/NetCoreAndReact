@@ -1,4 +1,4 @@
-import { action, makeAutoObservable } from "mobx";
+import { action, computed, makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import agent from "../api/agent";
 import { IActivity } from "../models/activity";
@@ -12,6 +12,12 @@ class ActivityStore {
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  @computed get activitiesByDate() {
+    return this.activities
+      .slice()
+      .sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   }
 
   @action loadActivities = async () => {
