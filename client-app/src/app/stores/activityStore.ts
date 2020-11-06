@@ -13,8 +13,19 @@ class ActivityStore {
     makeAutoObservable(this);
   }
 
-  @action loadActivities = () => {
+  @action loadActivities = async () => {
     this.loadingInitial = true;
+    try {
+      const activities = await agent.Activities.list();
+      activities.forEach((activity) => {
+        activity.date = activity.date.split(".")[0];
+        this.activities.push(activity);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    this.loadingInitial = false;
+  };
 
     agent.Activities.list()
       .then((activities) => {
