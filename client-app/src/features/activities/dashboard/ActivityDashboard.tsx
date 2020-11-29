@@ -1,24 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 import ActivityDetails from '../details/ActivityDetails';
 import { ActivityForm } from '../form/ActivityForm';
 import ActivityList from './ActivityList';
 import ActivityStore from '../../../app/stores/activityStore';
 
-interface IProps {
-  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-  submitting: boolean;
-  target: string;
-}
-
-const ActivityDashboard: React.FC<IProps> = observer(({
-  deleteActivity,
-  submitting,
-  target,
-}) => {
+const ActivityDashboard: React.FC = observer(() => {
   const activityStore = useContext(ActivityStore);
-  const { editMode, selectedActivity } = activityStore;
+  const { editMode, selectedActivity, deleteActivity, submitting, target } = activityStore;
+
   return (
     <Grid>
       <Grid.Column width={10}>
